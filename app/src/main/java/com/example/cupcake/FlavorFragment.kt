@@ -5,14 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.cupcake.databinding.FragmentFlavorBinding
+import com.example.cupcake.model.OrderViewModel
 
 
 class FlavorFragment : Fragment() {
 
     private var binding: FragmentFlavorBinding? = null
-
+    private val sharedViewModel : OrderViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,7 +28,12 @@ class FlavorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.apply {
-            nextButton.setOnClickListener{goToNextScreen()}
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = sharedViewModel
+
+//            nextButton.setOnClickListener{goToNextScreen()}
+//            use listener binding to bind the button click listeners in the fragment classes to the layout.
+            flavorFragment = this@FlavorFragment
         }
     }
     fun goToNextScreen() {
